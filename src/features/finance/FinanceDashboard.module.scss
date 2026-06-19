@@ -1,0 +1,196 @@
+.page {
+    min-height: 100vh;
+    background: #f7f8f4;
+    color: #17211b;
+    font-family: Inter, Arial, sans-serif;
+    padding: 32px;
+}
+
+.hero {
+    max-width: 1100px;
+    margin: 0 auto 22px;
+
+    span {
+        color: #52715f;
+        font: 700 13px Georgia, serif;
+        text-transform: uppercase;
+    }
+
+    h1 {
+        margin: 6px 0;
+        font: 700 42px Georgia, serif;
+        letter-spacing: 0;
+    }
+
+    p {
+        margin: 0;
+        max-width: 620px;
+        color: #5d6b63;
+        font-size: 16px;
+    }
+}
+
+.notice,
+.toolbar,
+.grid {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.notice {
+    background: #e8f1eb;
+    border: 1px solid #cadbce;
+    border-radius: 8px;
+    color: #2f5a3d;
+    padding: 12px 14px;
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.panel {
+    background: #ffffff;
+    border: 1px solid #dde3dc;
+    border-radius: 8px;
+    box-shadow: 0 14px 34px rgba(24, 38, 28, 0.07);
+    padding: 18px;
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #4b5c52;
+    margin-bottom: 14px;
+}
+
+.formGrid,
+.transactionForm {
+    display: grid;
+    gap: 10px;
+}
+
+.formGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.transactionForm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+input,
+select,
+button {
+    border-radius: 6px;
+    border: 1px solid #cfd8d1;
+    font: 600 14px Inter, Arial, sans-serif;
+    min-height: 42px;
+    padding: 0 12px;
+}
+
+button {
+    background: #20382b;
+    color: #ffffff;
+}
+
+.list,
+.table,
+.progressList {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.listItem,
+.transactionRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #edf0ed;
+    padding-top: 10px;
+}
+
+small,
+em {
+    display: block;
+    color: #6b756e;
+    font-style: normal;
+}
+
+em {
+    color: #9b5c18;
+}
+
+.metricGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.metric {
+    border-radius: 8px;
+    padding: 12px;
+    background: #f5f7f2;
+}
+
+.metric span {
+    color: #627066;
+    display: block;
+}
+
+.metric strong {
+    font: 700 20px Georgia, serif;
+}
+
+.good strong,
+.income {
+    color: #246b44;
+}
+
+.warn strong,
+.expense {
+    color: #9b4c2a;
+}
+
+.progressItem div {
+    background: #edf0ed;
+    border-radius: 999px;
+    height: 8px;
+    margin-top: 6px;
+}
+
+.progressItem i {
+    background: #52715f;
+    border-radius: inherit;
+    display: block;
+    height: 100%;
+}
+
+.emptyState {
+    color: #657168;
+    min-height: 120px;
+}
+
+@media (max-width: 840px) {
+    .page {
+        padding: 18px;
+    }
+
+    .grid,
+    .formGrid,
+    .transactionForm,
+    .metricGrid {
+        grid-template-columns: 1fr;
+    }
+}
