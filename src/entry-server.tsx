@@ -1,6 +1,6 @@
 import type * as express from 'express'
 import ReactDomServer from 'react-dom/server'
-import { StaticRouterProvider, createStaticHandler, createStaticRouter } from 'react-router-dom'
+import { StaticRouterProvider, createStaticHandler, createStaticRouter } from 'react-router-dom/server'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App';
 import routes from '@core/routes';

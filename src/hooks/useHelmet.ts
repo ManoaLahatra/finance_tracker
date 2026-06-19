@@ -1,8 +1,8 @@
-import helmetContext from "@core/contexts/helmetContext"
+import helmetContext, { HelmetContextValue } from "@core/contexts/helmetContext"
 import { useContext } from "react"
 
-const useHelmet = (): helmetContextType => {
-    return useContext(helmetContext) as helmetContextType
+const useHelmet = (): HelmetContextValue => {
+    return useContext(helmetContext)
 }
 
 export default useHelmet;

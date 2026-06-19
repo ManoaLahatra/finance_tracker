@@ -1,0 +1,100 @@
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.icon {
+  font-size: 2rem;
+  min-width: 2.5rem;
+}
+
+.content {
+  flex: 1;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  word-break: break-word;
+}
+
+.trend {
+  font-size: 0.875rem;
+  margin-top: var(--spacing-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trend.up {
+  color: var(--color-success);
+}
+
+.trend.down {
+  color: var(--color-error);
+}
+
+/* Type Variants */
+.card.default {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  border-color: var(--border-light);
+}
+
+.card.success {
+  background: linear-gradient(135deg, rgba(36, 107, 68, 0.05), rgba(36, 107, 68, 0.02));
+  border-color: rgba(36, 107, 68, 0.2);
+}
+
+.card.success .value {
+  color: var(--color-success);
+}
+
+.card.warning {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.05), rgba(234, 88, 12, 0.02));
+  border-color: rgba(234, 88, 12, 0.2);
+}
+
+.card.warning .value {
+  color: var(--color-warning);
+}
+
+.card.error {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(220, 38, 38, 0.02));
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+.card.error .value {
+  color: var(--color-error);
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .value {
+    font-size: 1.5rem;
+  }
+}

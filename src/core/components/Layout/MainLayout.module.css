@@ -1,0 +1,56 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+
+.main {
+  flex: 1;
+  margin-left: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-primary);
+}
+
+.main > div {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .main {
+    margin-left: 200px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .main {
+    margin-left: 0;
+    padding-top: 60px; /* Space for mobile menu button */
+  }
+}
+
+/* Scrollbar styling */
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.main::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-light);
+}
