@@ -55,7 +55,7 @@ const createServer = async () => {
     // api routes
     app.use('/api', api.router)
 
-    app.use('*', async (req: Request, res: Response) => {
+    app.use(async (req: Request, res: Response) => {
         try {
 
             const url = req.originalUrl;
