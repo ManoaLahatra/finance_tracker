@@ -1,0 +1,39 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id           String        @id
+  name         String
+  type         String
+  balance      Float
+  createdAt    String
+  transactions Transaction[]
+}
+
+model Category {
+  id                   String        @id
+  name                 String
+  monthlySpendingLimit Float?
+  createdAt            String
+  transactions         Transaction[]
+}
+
+model Transaction {
+  id         String   @id
+  accountId  String
+  categoryId String
+  type       String
+  amount     Float
+  date       String
+  note       String?
+  warning    String?
+  createdAt  String
+  account    Account  @relation(fields: [accountId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+}
