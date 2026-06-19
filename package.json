@@ -8,6 +8,7 @@
     "build": "npm run clean && npm run build:client && npm run build:server",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "test": "vitest",
+    "test:ci": "vitest run",
     "test:ui": "vitest --ui",
     "preview": "vite preview",
     "build:client": "vite build --outDir dist/app/client",
@@ -77,5 +78,5 @@
     "SSR Web Application with TypeScript",
     "High-Performance SSR with Vite"
   ],
-  "packageManager": "pnpm@10.6.1+sha256.81204845a396962a9c4b49cc2d6cafbb49a758652d3c243f2128cbc638084fe2"
+  "packageManager": "npm@11.13.0"
 }

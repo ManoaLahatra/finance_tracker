@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const helmetContext = React.createContext<any>({});
+import helmetContext from './helmetContext';
 
 const HelmetProvider = (props: React.PropsWithChildren) => {
     const [title, setTitle] = useState('Hello');
@@ -35,5 +33,4 @@ const HelmetProvider = (props: React.PropsWithChildren) => {
     );
 };
 
-export { helmetContext };
 export default HelmetProvider;

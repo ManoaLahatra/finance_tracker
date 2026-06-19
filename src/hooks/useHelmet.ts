@@ -1,4 +1,4 @@
-import { helmetContext } from "@core/contexts/HelmetContext"
+import helmetContext from "@core/contexts/helmetContext"
 import { useContext } from "react"
 
 const useHelmet = (): helmetContextType => {
