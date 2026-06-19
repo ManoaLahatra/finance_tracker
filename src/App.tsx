@@ -1,6 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async'
-import HelmetProvider from '@core/contexts/HelmetContext'
 
 function App(props: React.PropsWithChildren) {
 
@@ -9,10 +8,7 @@ function App(props: React.PropsWithChildren) {
 			<Helmet>
 				<title>ViteSSR + React + Helmet</title>
 			</Helmet>
-
-			<HelmetProvider>
-				{props.children}
-			</HelmetProvider>
+			{props.children}
 		</>
 	)
 }

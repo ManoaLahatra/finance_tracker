@@ -1,32 +1,42 @@
 import type { RouteObject } from "react-router-dom";
-import loadable from '@loadable/component'
-
-import Layout from "@core/components/Layout/Layout";
-import Home from "@screens/Home/Home";
-import homeLoader from "@loaders/homeLoader";
-import About from "@screens/About/About";
-
-const Contact = loadable(() => import("@screens/Contact/Contact"), { fallback: <div>Loading...</div> });
+import MainLayout from "@core/components/Layout/MainLayout";
+import Dashboard from "@screens/Dashboard/Dashboard";
+import Accounts from "@screens/Accounts/Accounts";
+import Categories from "@screens/Categories/Categories";
+import Transactions from "@screens/Transactions/Transactions";
+import Summary from "@screens/Summary/Summary";
 
 const routes: RouteObject[] = [
-    {
-        path: "/",
-        element: <Layout />,
-        children: [
-            {
-                index: true,
-                element: <Home />,
-                loader: homeLoader
-            }, {
-                path: "about",
-                element: <About />,
-            },
-            {
-                path: "contact",
-                element: <Contact />
-            }
-        ]
-    }
-]
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/accounts",
+        element: <Accounts />,
+      },
+      {
+        path: "/categories",
+        element: <Categories />,
+      },
+      {
+        path: "/transactions",
+        element: <Transactions />,
+      },
+      {
+        path: "/summary",
+        element: <Summary />,
+      },
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+    ],
+  },
+];
 
 export default routes;
