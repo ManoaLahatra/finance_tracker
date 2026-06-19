@@ -1,12 +1,16 @@
 import express, { Router } from 'express';
+import { createFinanceRouter } from './finance/controller/financeRouter';
+import { createFinanceModule } from './finance/service/financeModule';
+
 class App {
 
     public router: Router = express.Router();
 
     constructor() {
-        this.router.get('/', (req, res) => {
-            res.send("Welcome to the API!")
-        })
+        const finance = createFinanceModule();
+
+        this.router.use(express.json());
+        this.router.use(createFinanceRouter(finance));
     }
 }
 
