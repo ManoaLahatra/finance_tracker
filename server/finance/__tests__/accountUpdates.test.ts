@@ -31,7 +31,8 @@ describe("account updates", () => {
     const acc = await accounts.createAccount({ name: "Test", type: "checking", initialBalance: 0 });
 
     await expect(
-      (accounts.updateAccount as any)(acc.id, { type: "invalid" }),
+      // @ts-expect-error testing invalid type
+      accounts.updateAccount(acc.id, { type: "invalid" }),
     ).rejects.toThrow(FinanceError);
   });
 

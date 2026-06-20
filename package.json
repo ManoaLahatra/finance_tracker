@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "build:client": "vite build --outDir dist/app/client",
     "build:server": "tsc -p tsconfig.server.json && vite build --ssr src/entry-server.tsx --outDir dist/entry",
+    "postinstall": "prisma generate",
     "clean": "rimraf dist",
     "serve": "cross-env NODE_ENV=production node ./dist/app/server"
   },
