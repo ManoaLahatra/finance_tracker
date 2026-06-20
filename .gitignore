@@ -27,3 +27,5 @@ dist-ssr
 dev.db
 prisma/dev.db
 nul
+api/handler.js
+*.tsbuildinfo

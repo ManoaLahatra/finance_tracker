@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build:client",
+  "buildCommand": "npx esbuild api/_handler.ts --bundle --platform=node --format=esm --external:express --external:@prisma/client --external:@libsql/client --external:@prisma/adapter-libsql --outfile=api/handler.js && npm run build:client",
   "outputDirectory": "dist/app/client",
   "installCommand": "npm ci",
   "rewrites": [
