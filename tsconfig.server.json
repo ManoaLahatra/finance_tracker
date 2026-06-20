@@ -26,7 +26,6 @@
   },
   "include": [
     "api/**/*",
-    "api-handler.ts",
     "types/*",
     "server.ts"
   ],
