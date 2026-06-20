@@ -6,8 +6,12 @@ import { createFinanceModule } from '../server/finance/service/financeModule';
 const app = express();
 
 app.use(express.json());
-createFinanceModule().then((finance) => {
+
+const ready = createFinanceModule().then((finance) => {
   app.use(createFinanceRouter(finance));
+  app.use((_req, res) => {
+    res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Route not found' } });
+  });
 });
 
 const normalizeVercelUrl = (url: string | undefined): string => {
@@ -22,7 +26,8 @@ const normalizeVercelUrl = (url: string | undefined): string => {
     return url;
 };
 
-export default function handler(request: IncomingMessage, response: ServerResponse) {
+export default async function handler(request: IncomingMessage, response: ServerResponse) {
+    await ready;
     request.url = normalizeVercelUrl(request.url);
     app(request, response);
 }
