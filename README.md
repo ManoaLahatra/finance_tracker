@@ -1,172 +1,77 @@
-# Personal Finance Tracker
+# Finance Tracker
 
-A professional-grade, full-stack personal finance management application. Track multiple bank accounts, record income and expenses, organize transactions by category, and review monthly financial summaries.
+Full-stack personal finance app: Express + React + Prisma + SQLite (dev) / Turso (prod).
 
-**Status**: ✅ Production Ready | **Tests**: 9/9 Passing | **Build**: Success
-
-## 🎯 Key Features
-
-### Backend
-- ✅ Account management (create, read, delete)
-- ✅ Transaction logging with automatic balance updates
-- ✅ Category organization with spending limits
-- ✅ Monthly financial reports and analytics
-- ✅ Warning system for budget overruns
-- ✅ Prevents negative account balances
-
-### Frontend
-- ✅ Multi-screen navigation (Dashboard, Accounts, Categories, Transactions, Summary)
-- ✅ Responsive mobile-first design
-- ✅ Smooth Framer Motion animations
-- ✅ Real-time data updates
-- ✅ Loading states and error handling
-- ✅ Color-coded transactions (green=income, red=expense)
-
-### Architecture
-- ✅ SOLID Principles throughout
-- ✅ CQRS pattern for read/write operations
-- ✅ Repository pattern for data abstraction
-- ✅ 100% TypeScript type-safe
-- ✅ Comprehensive test coverage
-
-## 🚀 Quick Start
-
-Requirements:
-- Node `22.13.1` or higher
-- npm `11.13.0` or higher
+## Quick Start
 
 ```bash
-# Clone and setup
-git clone <repository>
-cd finance_tracker
-
-# Install dependencies
 npm ci
-
-# Start development server
 npm run dev
 ```
 
-**App URL**: http://localhost:3000
-**API URL**: http://localhost:3000/api
+Opens at http://localhost:3000. The API is at `/api`.
 
-## 📋 Available Commands
+## What It Does
 
-```bash
-# Development
-npm run dev              # Start dev server with hot reload
-npm run test             # Run tests in watch mode
-npm run test:ci          # Run tests once (CI mode)
-npm run lint             # Check code quality
+- Track multiple accounts (checking, savings, cash)
+- Log income/expenses/transfers with categories
+- Set monthly spending limits per category (warns when exceeded)
+- Monthly summary with breakdown by category
+- Export transactions to XLSX
+- Prevents negative balances
 
-# Production
-npm run build            # Build for production
-npm run serve            # Serve production build locally
-
-# Other
-npm run preview          # Preview Vite build
-```
-
-## 🌍 Local Routes
-
-- **Frontend**: http://localhost:3000
-- **API Base**: http://localhost:3000/api
-- **Accounts**: GET/POST/DELETE `/api/accounts`
-- **Categories**: GET/POST `/api/categories`
-- **Transactions**: GET/POST `/api/transactions`
-- **Summary**: GET `/api/summary?accountId=...&month=...`
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
-finance_tracker/
-├── server/                    # Express backend
-│   ├── finance/              # Core finance module
-│   │   ├── service/          # Business logic
-│   │   ├── repository/       # Data access layer
-│   │   ├── controller/       # HTTP routes
-│   │   ├── model/            # TypeScript types
-│   │   └── __tests__/        # Backend tests
-├── src/                       # React frontend
-│   ├── screens/              # Main page components
-│   ├── components/           # Reusable UI components
-│   ├── hooks/                # Custom React hooks
-│   └── __tests__/            # Frontend tests
-├── prisma/
-│   └── schema.prisma         # Database schema
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md                 # This file
+server/        — Express backend (controllers → services → repository → database)
+src/           — React frontend (Vite SSR + SPA)
+prisma/        — Database schema
+api/           — Vercel serverless entry point (esbuild bundle)
 ```
 
-## 🧪 Testing
+## Architecture Decisions
 
-All tests passing (9/9):
+**Layered backend:** Controllers handle HTTP, services hold business logic, repository abstracts the database. Makes testing easy — there's an `InMemoryFinanceRepository` used in tests alongside the real `PrismaFinanceRepository`.
 
-```bash
-# Run all tests
-npm run test:ci
+**CQRS-lite:** Reads go through `FinanceQueryService`, writes through `AccountService`/`CategoryService`/`TransactionService`. Keeps query logic separate from command logic.
 
-# Expected output:
-# ✓ 5 test files passed
-# ✓ 9 tests passed
-# ✓ Duration: ~2.6s
-```
+**Two databases, same schema:** Local dev uses SQLite (file: `./dev.db`) via `better-sqlite3`. Production on Vercel uses Turso (edge-hosted libSQL). The Prisma adapter switches based on the `VERCEL` env var in `server/finance/service/financeModule.ts`.
 
-**Test Coverage**:
-- Account transaction rules (3 tests)
-- Category monthly limits (2 tests)
-- Monthly summary calculations (1 test)
-- HTTP API endpoints (2 tests)
-- UI components (1 test)
+**Serverless on Vercel:** The `api/_handler.ts` is bundled with esbuild into `api/handler.js`. Express app is mounted as a serverless function. SPA routes fall back to `index.html` via `vercel.json` rewrites.
 
-## 🎨 Tech Stack
+## Trade-offs Worth Knowing
 
-### Backend
-- **Framework**: Express.js 5.x
-- **Language**: TypeScript 5.7
-- **ORM**: Prisma 7.8
-- **Database**: SQLite
-- **Testing**: Vitest 3.2
-- **Runtime**: Node.js 18+
+| Choice | Why | Downside |
+|---|---|---|
+| SQLite locally, Turso in prod | Zero setup for dev, edge-hosted for prod | Slight difference in DB features; Prisma adapter versions must match exactly |
+| `@prisma/adapter-libsql@6.19.3` | v6.x API uses `PrismaLibSQL` (capital S); v7+ renamed to `PrismaLibSql` | Pinning to v6 means no newer features |
+| `Float` for money | Good enough for personal finance | Not safe for accounting (floating point) |
+| Timestamps as `String` | SQLite has no native datetime | No date arithmetic in DB |
+| `provider = "sqlite"` in Prisma | Keeps things simple | Can't use Turso CLI `prisma db push` directly — need to generate SQL manually |
+| esbuild `--packages=external` | Avoids CJS/ESM conflicts with `exceljs` | Dependencies must be installed on Vercel at runtime |
+| Category limit warnings on write | Simple to implement | Doesn't catch overspend across multiple transactions in the same batch |
+| Transfers as two transactions | Balance stays accurate | No single "transfer" entity linking the pair |
 
-### Frontend
-- **Library**: React 18.3
-- **Routing**: React Router 6.22
-- **Animations**: Framer Motion
-- **Build**: Vite 7.1
-- **Styling**: Modern CSS + Design System
-- **HTTP**: Fetch API
-
-## 📊 Build & Performance
+## Environment Variables
 
 ```
-Client Bundle:  361KB (116.5KB gzipped) ✓
-Server Bundle:  139.5KB ✓
-No TypeScript Errors ✓
-No Linting Violations ✓
+DATABASE_URL="file:./dev.db"                                # local
+TURSO_DATABASE_URL="libsql://<your-db>.turso.io"            # Vercel
+TURSO_AUTH_TOKEN="<token>"                                  # Vercel
 ```
 
-## 📚 API Documentation
+## Scripts
 
-See `PROJECT_COMPLETION.md` for detailed API documentation with curl examples.
+| Command | What |
+|---|---|
+| `npm run dev` | Dev server with hot reload |
+| `npm run test` | Tests in watch mode |
+| `npm run test:ci` | Tests once |
+| `npm run lint` | ESLint |
+| `npm run build` | Production build (client + server) |
 
-## CI/CD
+## Deploying to Vercel
 
-GitHub Actions runs on pull requests and pushes to `main` or `master`:
-
-1. `npm ci`
-2. `npm run lint`
-3. `npm run test:ci`
-4. `npm run build`
-
-Vercel is configured through `vercel.json` to install with `npm ci` and build with `npm run build`.
-The `api/` directory contains Vercel serverless functions, while `server/` supports the local Express development server.
-
-Recommended Git flow:
-
-- Work on short-lived feature branches.
-- Open a pull request before merging to `main`.
-- Keep `package-lock.json` committed for reproducible CI and Vercel installs.
-- Do not commit generated folders such as `node_modules` or `dist`.
+1. Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` in Vercel dashboard
+2. Push the Prisma schema to Turso: `npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script \| turso db shell <db-name>`
+3. Deploy — `vercel.json` handles esbuild bundling and SPA rewrites
