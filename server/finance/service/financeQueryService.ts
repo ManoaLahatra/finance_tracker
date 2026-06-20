@@ -3,7 +3,7 @@ import ExcelJS from 'exceljs';
 import { FinanceError } from '../errors/financeError';
 import { addMoney, roundMoney } from '../utils/money';
 import type { FinanceRepository } from '../repository/financeRepository';
-import type { Account, Category, MonthlySummary, Transaction, AccountType } from '../model/types';
+import type { Account, Category, MonthlySummary, Transaction } from '../model/types';
 
 export class FinanceQueryService {
     constructor(private readonly repository: FinanceRepository) {}
@@ -101,7 +101,6 @@ export class FinanceQueryService {
         const fromDate = normalizeIsoDate(from);
         const toDate = normalizeIsoDate(to);
         await this.ensureAccountExists(accountId);
-        const account = await this.repository.findAccountById(accountId) as Account;
         const categories = await this.repository.listCategories();
         const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
 
