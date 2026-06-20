@@ -5,7 +5,7 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv'
 import { ViteDevServer } from 'vite';
 
-import api from './server/app.js';
+import api, { init } from './server/app.js';
 
 dotenv.config()
 const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +21,7 @@ const indexProd: string = isProd
 
 const createServer = async () => {
 
+    await init;
     const app = express();
 
     let vite: ViteDevServer | undefined;
@@ -53,7 +54,7 @@ const createServer = async () => {
     }
 
     // api routes
-    app.use('/api', api.router)
+    app.use('/api', api)
 
     app.use(async (req: Request, res: Response) => {
         try {
