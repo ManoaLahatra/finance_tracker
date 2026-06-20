@@ -1,7 +1,7 @@
 import express from 'express';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { createFinanceRouter } from '../server/finance/controller/financeRouter';
-import { createFinanceModule } from '../server/finance/service/financeModule';
+import { createFinanceRouter } from './server/finance/controller/financeRouter';
+import { createFinanceModule } from './server/finance/service/financeModule';
 
 const app = express();
 
