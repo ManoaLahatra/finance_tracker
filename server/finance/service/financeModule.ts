@@ -15,8 +15,8 @@ export type FinanceModule = {
 
 const createPrismaClient = (): Promise<PrismaClient> => {
   if (process.env.VERCEL === '1') {
-    return import('@prisma/adapter-libsql').then(({ PrismaLibSql }) => {
-      const adapter = new PrismaLibSql({
+    return import('@prisma/adapter-libsql').then(({ PrismaLibSQL }) => {
+      const adapter = new PrismaLibSQL({
         url: process.env.TURSO_DATABASE_URL!,
         authToken: process.env.TURSO_AUTH_TOKEN,
       });
