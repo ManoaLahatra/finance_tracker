@@ -13,13 +13,26 @@ export type FinanceModule = {
   queries: FinanceQueryService;
 };
 
-export const createFinanceModule = (
+const createPrismaClient = (): Promise<PrismaClient> => {
+  if (process.env.VERCEL === '1') {
+    return import('@prisma/adapter-libsql').then(({ PrismaLibSql }) => {
+      const adapter = new PrismaLibSql({
+        url: process.env.TURSO_DATABASE_URL!,
+        authToken: process.env.TURSO_AUTH_TOKEN,
+      });
+      return new PrismaClient({ adapter });
+    });
+  }
+  return Promise.resolve(new PrismaClient());
+};
+
+export const createFinanceModule = async (
   repository?: FinanceRepository,
-): FinanceModule => {
+): Promise<FinanceModule> => {
   const repo =
     repository ??
     new PrismaFinanceRepository(
-      new PrismaClient(),
+      await createPrismaClient(),
     );
 
   return {

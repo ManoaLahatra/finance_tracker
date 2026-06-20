@@ -16,9 +16,8 @@ const startApi = async (): Promise<StartedServer> => {
   const app = express();
 
   app.use(express.json());
-  app.use(
-    createFinanceRouter(createFinanceModule(new InMemoryFinanceRepository())),
-  );
+  const finance = await createFinanceModule(new InMemoryFinanceRepository());
+  app.use(createFinanceRouter(finance));
 
   const server = app.listen(0);
 

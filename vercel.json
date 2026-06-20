@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx prisma generate && npm run build:client",
+  "buildCommand": "npm run build:client",
   "outputDirectory": "dist/app/client",
   "installCommand": "npm ci",
   "rewrites": [
